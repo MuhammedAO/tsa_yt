@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Typography, Button, Form, message, Input, Icon } from 'antd'
 import Dropzone from 'react-dropzone'
+import axios from 'axios'
 
 const { Title } = Typography
 const { TextArea } = Input
@@ -25,6 +26,7 @@ const UploadVideoPage = () => {
   const [Description, setDescription] = useState("")
   const [privacy, setPrivacy] = useState(0)
   const [Categories, setCategories] = useState("Film & Animation")
+  const [filePath, setfilePath] = useState("")
 
   const handleChangeTitle = (event) => {
     setTitle(event.currentTarget.value)
@@ -47,6 +49,33 @@ const UploadVideoPage = () => {
         
   }
 
+  const onDrop = (files) => {
+    //When we are sending the file to backend using http,
+    //we need to put this config inside http return so that we don't have errors.
+   let formData = new FormData()
+   const config = {
+     header: {'content-type': 'multipart/form-data'}
+   }
+   console.log(files)
+   //we want send only one video thats why => files[0]
+   formData.append("file", files[0])
+
+   //axios
+   axios.post('/api/video/uploadfiles', formData, config)
+   .then(response => {
+     if(response.data.success) {
+      // console.log(response)
+      let variable = {
+        filePath: response.data.filePath,
+        fileName: response.data.fileName
+      }
+      setfilePath(response.data.filePath)
+     } else {
+       alert('Failed to save the video in the server')
+     }
+   })
+  }
+
 
   return (
     <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
@@ -57,6 +86,7 @@ const UploadVideoPage = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           {/* upload video box*/}
           <Dropzone
+          onDrop={onDrop}
             multiple={false}
             maxSize={800000000}>
             {({ getRootProps, getInputProps }) => (
