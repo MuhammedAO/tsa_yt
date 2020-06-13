@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Typography, Button, Form, message, Input, Icon } from 'antd'
 import Dropzone from 'react-dropzone'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const { Title } = Typography
 const { TextArea } = Input
@@ -14,13 +15,15 @@ const Private = [
 //add more categories if u like
 const Catogory = [
   { value: 0, label: "Film & Animation" },
-  { value: 0, label: "Autos & Vehicles" },
+  { value: 0, label: "Programming & Computer Science" },
   { value: 0, label: "Music" },
   { value: 0, label: "Pets & Animals" },
   { value: 0, label: "Sports" },
 ]
 
-const UploadVideoPage = () => {
+const UploadVideoPage = (props) => {
+  //redux hook to get userId from redux state
+  const user = useSelector(state => state.user)
 
   const [title, setTitle] = useState("")
   const [Description, setDescription] = useState("")
@@ -47,8 +50,42 @@ const UploadVideoPage = () => {
     setCategories(event.currentTarget.value)
   }
 
-  const onSubmit = () => {
-        
+  const onSubmit = (event) => {
+        event.preventDefault()
+         
+    //Prevent from uploading if you're not logged in.
+    if (user.userData && !user.userData.isAuth) {
+      return alert('Please Log in First')
+    }
+    //fill out all fields
+    if (title === "" || Description === "" ||
+      Categories === "" || filePath === "" ||
+      Duration === "" || ThumbNail === "") {
+      return alert('Please fill all the fields')
+    }
+
+    const variables = {
+      //The writer who is posting the video
+      writer: user.userData._id,
+      title: title,
+      description: Description,
+      privacy: privacy,
+      filePath: filePath,
+      category: Categories,
+      duration: Duration,
+      thumbnail: ThumbNail
+    }
+
+      axios.post('/api/video/uploadVideo', variables)
+          .then(response => {
+              if (response.data.success) {
+                  alert('video Uploaded Successfully')
+                  //redirect
+                  props.history.push('/')
+              } else {
+                  alert('Failed to upload video')
+              }
+          })
   }
 
   const onDrop = (files) => {
