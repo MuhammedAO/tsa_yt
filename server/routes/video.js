@@ -3,6 +3,8 @@ const router = express.Router()
 const multer = require('multer')
 const ffmpeg = require('fluent-ffmpeg')
 
+const {Video} = require('../models/Video')
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/')
@@ -22,7 +24,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage }).single("file")
 
-//video upload
+
+//file upload
 router.post("/uploadfiles", (req, res) => {
   //upload video
   upload(req, res, err => {
@@ -33,6 +36,21 @@ router.post("/uploadfiles", (req, res) => {
     return res.json({ success: true, filePath: res.req.file.path, fileName: res.req.file.filename })
   })
 });
+
+//video upload
+router.post("/uploadVideo", (req, res) => {
+  //get variables sent from the client and put that data inside
+  const video = new Video(req.body)
+
+  //save
+  video.save((err, video) => {
+    if (err) return res.status(400).json({ success: false, err })
+    return res.status(200).json({
+      success: true
+    })
+  })
+
+})
 
 //thumbnail
 router.post("/thumbnail", (req, res) => {
