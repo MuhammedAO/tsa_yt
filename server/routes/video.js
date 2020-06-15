@@ -52,6 +52,20 @@ router.post("/uploadVideo", (req, res) => {
 
 })
 
+//get videos
+router.get("/getVideos", (req, res) => {
+  //Find all of the data inside the video collection using the video model.
+  //find by populating with all writers info
+  //execute the query/request
+  Video.find()
+  .populate('writer')
+  .exec((err, videos) => {
+   if (err) return res.status(400).send(err)
+   res.status(200).json({success: true, videos})
+  })
+
+})
+
 //thumbnail
 router.post("/thumbnail", (req, res) => {
   
