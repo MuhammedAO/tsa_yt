@@ -66,6 +66,17 @@ router.get("/getVideos", (req, res) => {
 
 })
 
+//get video
+router.post("/getVideo", (req, res) => {
+  //find the video that matches the videoId variable that was passed from the F.E
+  Video.findOne({ "_id": req.body.videoId })
+    .populate('writer')
+    .exec((err, video) => {
+      if (err) return res.status(400).send(err)
+      res.status(200).json({ success: true, video })
+    })
+})
+
 //thumbnail
 router.post("/thumbnail", (req, res) => {
   
