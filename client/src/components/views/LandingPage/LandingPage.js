@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Avatar, Col, Typography, Row } from 'antd'
 import axios from 'axios'
 import moment from 'moment'
+import {Link} from 'react-router-dom'
 
 const { Title } = Typography
 const { Meta } = Card
@@ -14,7 +15,7 @@ function LandingPage() {
     axios.get('/api/video/getVideos')
       .then(response => {
         if (response.data.success) {
-          console.log(response.data.videos)
+          // console.log(response.data.videos)
           setVideos(response.data.videos)
         } else {
           alert('Failed to get videos')
@@ -28,7 +29,8 @@ function LandingPage() {
 
     return <Col lg={6} md={8} xs={24} key={index}>
       <div style={{ position: 'relative' }}>
-        <img src={`http://localhost:5000/${video.thumbnail}`} alt="" style={{ width: '100%' }} />
+      <Link to={`/video/${video._id}`}>
+        <img src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" style={{ width: '100%' }} />
         <div className="duration"
           style={{
             bottom: 0, right: 0, position: 'absolute', margin: '4px',
@@ -39,14 +41,15 @@ function LandingPage() {
         >
           <span>{minutes} : {seconds}</span>
         </div>
-      </div><br></br>
+        </Link>
+      </div><br/>
       <Meta
         avatar={
           <Avatar src={video.writer.image} />
         }
         title={video.title}
       />
-      <span>{video.writer.name}</span> <br></br>
+      <span>{video.writer.name}</span> <br/>
       <span style={{ marginLeft: '3rem' }}>{video.views}</span>
         - <span>{moment(video.createdAt).format("MMM Do YY")}</span>
     </Col>
