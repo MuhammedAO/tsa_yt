@@ -31,6 +31,8 @@ app.use(cookieParser());
 app.use('/api/users', require('./routes/users'));
 //video page
 app.use('/api/video', require('./routes/video'));
+//subscribe
+app.use('/api/subscribe', require('./routes/subscribe'));
 
 
 
