@@ -1,8 +1,9 @@
 import React from 'react'
-import { List, Avatar, Typography } from 'antd'
+import { List, Avatar, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import SideVideo from './Sections/SideVideo'
 
 
 const DetailVideoPage = (props) => {
@@ -29,6 +30,8 @@ const DetailVideoPage = (props) => {
   }, [videoVariable])
 
   return (
+    <Row>
+    <Col lg={18} xs={24}>
     <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
       <video style={{ width: '100%' }} src={`http://localhost:5000/${Video.filePath}`} controls></video>
       <List.Item
@@ -43,6 +46,12 @@ const DetailVideoPage = (props) => {
       </List.Item>
 
     </div>
+      </Col>
+      {/*2nd col*/}
+      <Col lg={6} xs={24}>
+        <SideVideo />
+      </Col>
+    </Row>
   )
 }
 
