@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import SideVideo from './Sections/SideVideo'
 import Subscriber from './Sections/Subscriber'
+import Comments from './Sections/Comments'
 
 
 const DetailVideoPage = (props) => {
@@ -49,6 +50,8 @@ const DetailVideoPage = (props) => {
               />
               <div></div>
             </List.Item>
+            {/*Comments*/}
+            <Comments/>
 
           </div>
         </Col>
