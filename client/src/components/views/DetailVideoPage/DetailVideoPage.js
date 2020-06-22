@@ -14,6 +14,8 @@ const DetailVideoPage = (props) => {
 
   const [Video, setVideo] = useState([])
 
+  const [CommentLists, setCommentLists] = useState([])
+
   const videoVariable = {
     videoId
   }
@@ -29,8 +31,11 @@ const DetailVideoPage = (props) => {
         }
       })
 
-  }, [videoVariable])
+  }, [])
 
+  const updateComment =  (newComment) => {
+    setCommentLists(CommentLists.concat(newComment))
+}
 
   //  Conditional rendering for video.writer_.id
 
@@ -51,7 +56,7 @@ const DetailVideoPage = (props) => {
               <div></div>
             </List.Item>
             {/*Comments*/}
-            <Comments/>
+            <Comments CommentLists={CommentLists} postId={Video._id} refreshFunction={updateComment}/>
 
           </div>
         </Col>
