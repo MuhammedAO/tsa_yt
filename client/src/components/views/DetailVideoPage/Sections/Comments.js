@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Input } from 'antd'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+import SingleComment from './SingleComment'
 
 
 const { TextArea } = Input
@@ -41,7 +42,16 @@ const Comments = ({postId, refreshFunction, CommentLists}) => {
       <p> replies</p>
       <hr />
       {/* Comment Lists  */}
-        {console.log(CommentLists)}
+      {/*  {console.log(CommentLists)} */}
+      
+      {CommentLists && CommentLists.map((comment, index) => (
+        (!comment.responseTo &&
+          <React.Fragment key={index}>
+          <SingleComment comment={comment} postId={postId} refreshFunction={refreshFunction}/>
+        </React.Fragment>
+        )
+      ))}
+
       {/* Root Comment Form */}
       <form style={{ display: 'flex' }} onSubmit={onSubmit}>
         <TextArea
