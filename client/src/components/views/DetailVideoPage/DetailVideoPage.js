@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import { List, Avatar, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
@@ -26,6 +27,17 @@ const DetailVideoPage = (props) => {
         if (response.data.success) {
           // console.log(response.data.video)
           setVideo(response.data.video)
+        } else {
+          alert('Failed to get video Info')
+        }
+      })
+
+      //get comments
+    axios.post('/api/comment/getComments', videoVariable)
+      .then(response => {
+        if (response.data.success) {
+          // console.log('response.data.comments', response.data.comments)
+          setCommentLists(response.data.comments)
         } else {
           alert('Failed to get video Info')
         }
