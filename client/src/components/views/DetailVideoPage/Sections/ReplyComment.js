@@ -19,18 +19,18 @@ const ReplyComment = (props) => {
   }, [])
 
 
-  let renderReplyComment = (parentCommentId) => {
+  let renderReplyComment = (parentCommentId) => 
     props.CommentLists && props.CommentLists.map((comment, index) => (
       <React.Fragment key={index}>
         {comment.responseTo === parentCommentId &&
           <div style={{ width: '80%', marginLeft: '40px' }}>
             <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
-            <ReplyComment CommentLists={props.CommentLists} postId={props.postId} refreshFunction={props.refreshFunction} parentCommentId={comment._id} />
+            <ReplyComment CommentLists={props.CommentLists}  parentCommentId={comment._id} postId={props.postId} refreshFunction={props.refreshFunction} />
           </div>
         }
       </React.Fragment>
     ))
-  }
+  
 
   const handleChange = () => {
     setOpenReplyComments(!OpenReplyComments)

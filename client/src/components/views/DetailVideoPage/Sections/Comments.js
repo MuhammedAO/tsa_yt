@@ -43,7 +43,7 @@ const Comments = ({postId, refreshFunction, CommentLists}) => {
       <p> replies</p>
       <hr />
       {/* Comment Lists  */}
-      {/*  {console.log(CommentLists)} */}
+       {console.log(CommentLists)} 
       
       {CommentLists && CommentLists.map((comment, index) => (
         (!comment.responseTo &&

@@ -30,9 +30,9 @@ const SideVideo = () => {
   return <div style={{ display: 'flex', marginTop: '1rem', padding: '0 2rem' }} key={index}>
 
   <div style={{ width:'40%', marginRight:'1rem' }}>
-    <Link to={`/video/${video._id}`}  style={{ color:'gray' }}>
+    <a href={`/video/${video._id}`}  style={{ color:'gray' }}>
       <img src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" style={{ width: '100%' }} />
-    </Link>
+    </a>
   </div>
 
   <div style={{ width:'50%' }}>
