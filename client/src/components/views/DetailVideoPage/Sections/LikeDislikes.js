@@ -57,21 +57,92 @@ const LikeDislikes = (props) => {
 
   }, [])
 
+  const onLike = () => {
+
+    if (LikeAction === null) {
+      Axios.post('/api/like/upLike', variable)
+        .then(response => {
+          if (response.data.success) {
+            setLikes(Likes + 1)
+            setLikeAction('liked')
+
+            //if dislike button is already clicked
+            if (DislikeAction !== null) {
+              setDislikeAction(null)
+              setDislikes(Dislikes - 1)
+            }
+
+          } else {
+            alert('Failed to increase the like')
+          }
+        })
+    } else {
+      Axios.post('/api/like/unLike', variable)
+        .then(response => {
+          if (response.data.success) {
+            setLikes(Likes - 1)
+            setLikeAction(null)
+          } else {
+            alert('Failed to increase the like')
+          }
+        })
+    }
+  }
+
+  const onDisLike = () => {
+
+    if (DislikeAction !== null) {
+
+      Axios.post('/api/like/unDisLike', variable)
+        .then(response => {
+          if (response.data.success) {
+
+            setDislikes(Dislikes - 1)
+            setDislikeAction(null)
+
+          } else {
+            alert('Failed to decrease dislike')
+          }
+        })
+    } else {
+
+      Axios.post('/api/like/upDisLike', variable)
+        .then(response => {
+          if (response.data.success) {
+
+            setDislikes(Dislikes + 1)
+            setDislikeAction('disliked')
+
+            //if dislike button is already clicked
+            if (DislikeAction !== null) {
+              setLikeAction(null)
+              setLikes(Likes - 1)
+            }
+
+          } else {
+            alert('Failed to increase dislike')
+          }
+        })
+    }
+  }
+
   return (
     <React.Fragment>
       <span key="comment-basic-like">
         <Tooltip title="Like">
           <Icon type="like"
             theme={LikeAction === 'liked' ? 'filled' : 'outlined'}
+            onClick={onLike}
           />
         </Tooltip>
-        <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Likes}r</span>
+        <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Likes}</span>
       </span>&nbsp;&nbsp;
       <span key="comment-basic-dislike">
         <Tooltip title="Dislike">
           <Icon
             type="dislike"
             theme={DislikeAction === 'disliked' ? 'filled' : 'outlined'}
+            onClick={onDisLike}
           />
         </Tooltip>
         <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Dislikes}</span>
