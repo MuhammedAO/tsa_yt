@@ -35,6 +35,8 @@ app.use('/api/video', require('./routes/video'))
 app.use('/api/subscribe', require('./routes/subscribe'))
 //comment
 app.use('/api/comment', require('./routes/comment'))
+//like
+app.use('/api/like', require('./routes/like'))
 
 
 
