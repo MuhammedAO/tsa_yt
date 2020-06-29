@@ -30,7 +30,7 @@ function LandingPage() {
     return <Col lg={6} md={8} xs={24} key={index}>
       <div style={{ position: 'relative' }}>
       <Link to={`/video/${video._id}`}>
-        <img src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" style={{ width: '100%' }} />
+        <img src={`https://localhost:5000/${video.thumbnail}`} alt="thumbnail" style={{ width: '100%' }} />
         <div className="duration"
           style={{
             bottom: 0, right: 0, position: 'absolute', margin: '4px',
